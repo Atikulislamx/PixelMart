@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelMart — Jewelry & Cosmetics</title>
+  <meta name="description" content="PixelMart is a demo jewelry and cosmetics store built for Meta Pixel and analytics testing.">
+
+  <!-- =========================================================
+       META PIXEL — LEARNING PLACEHOLDER
+       Replace YOUR_PIXEL_ID below with your real Meta Pixel ID.
+       Do not remove the noscript block.
+       ========================================================= -->
+  <!--
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', 'YOUR_PIXEL_ID');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+  </noscript>
+  -->
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="test-banner">
+    🧪 PixelMart is a demo store for Meta Pixel, GTM & analytics testing — no real purchases.
+  </div>
+
+  <header class="site-header">
+    <a class="logo" href="#home">Pixel<span>Mart</span></a>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <button class="cart-button" id="cartButton" aria-label="Open shopping cart">
+      🛍️ Cart <span id="cartCount">0</span>
+    </button>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">BEAUTY • STYLE • EVERY DAY</p>
+        <h1>Little luxuries.<br><span>Big confidence.</span></h1>
+        <p>Discover demo jewelry and beauty essentials in a realistic e-commerce environment made for tracking practice.</p>
+        <a class="primary-button" href="#shop">Explore Collection →</a>
+      </div>
+      <div class="hero-art">
+        <div class="hero-orb orb-one"></div>
+        <div class="hero-orb orb-two"></div>
+        <div class="hero-card">
+          <div class="hero-product">✦</div>
+          <strong>Everyday Glow</strong>
+          <small>Jewelry + Beauty</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="shop">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">SHOP THE DEMO CATALOG</p>
+          <h2>Featured products</h2>
+        </div>
+        <div class="search-wrap">
+          <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products">
+        </div>
+      </div>
+
+      <div class="category-row">
+        <button class="filter active" data-category="all">All</button>
+        <button class="filter" data-category="jewelry">Jewelry</button>
+        <button class="filter" data-category="cosmetics">Cosmetics</button>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+      <p class="empty-state hidden" id="emptyState">No demo products matched your search.</p>
+    </section>
+
+    <section class="tracking-section">
+      <div>
+        <p class="eyebrow">LEARNING LAB</p>
+        <h2>Track the customer journey.</h2>
+        <p>Every important interaction is wired so you can practice understanding browser events, parameters, and the Meta Events Manager.</p>
+      </div>
+      <div class="event-list">
+        <span>PageView</span>
+        <span>ViewContent</span>
+        <span>Search</span>
+        <span>AddToCart</span>
+        <span>InitiateCheckout</span>
+        <span>AddPaymentInfo</span>
+        <span>Purchase</span>
+      </div>
+    </section>
+
+    <section class="about section" id="about">
+      <p class="eyebrow">ABOUT PIXELMART</p>
+      <h2>A fake store with a real learning purpose.</h2>
+      <p>PixelMart does not process real orders or payments. It exists so you can safely experiment with Meta Pixel, Google Tag Manager, browser events, custom parameters, Event Match Quality concepts, and debugging tools.</p>
+    </section>
+  </main>
+
+  <div class="overlay hidden" id="overlay"></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart">
+    <div class="drawer-header">
+      <h2>Your Cart</h2>
+      <button id="closeCart" class="icon-button">×</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer">
+      <div class="total-row"><span>Subtotal</span><strong id="cartTotal">৳0</strong></div>
+      <button class="primary-button full" id="checkoutButton">Proceed to Checkout</button>
+    </div>
+  </aside>
+
+  <div class="modal hidden" id="productModal">
+    <div class="modal-card">
+      <button class="modal-close" id="closeProductModal">×</button>
+      <div id="productModalContent"></div>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="checkoutModal">
+    <div class="modal-card checkout-card">
+      <button class="modal-close" id="closeCheckoutModal">×</button>
+      <div id="checkoutContent">
+        <p class="eyebrow">DEMO CHECKOUT</p>
+        <h2>Complete your test order</h2>
+        <p class="muted">This is a fake checkout. No real payment will be taken.</p>
+
+        <form id="checkoutForm">
+          <div class="form-grid">
+            <label>Full name<input name="name" required placeholder="Test Customer"></label>
+            <label>Email<input name="email" type="email" required placeholder="test@example.com"></label>
+            <label>Phone<input name="phone" required placeholder="+880 1XXXXXXXXX"></label>
+            <label>City<input name="city" required placeholder="Dhaka"></label>
+          </div>
+
+          <label>Shipping address
+            <textarea name="address" required placeholder="123 Demo Street"></textarea>
+          </label>
+
+          <div class="fake-payment">
+            <strong>💳 Test payment</strong>
+            <p>Use any fake card number. Nothing is charged.</p>
+            <input name="card" required placeholder="4242 4242 4242 4242" maxlength="19">
+          </div>
+
+          <button class="primary-button full" type="submit">Place Demo Order — <span id="checkoutTotal">৳0</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <strong>PixelMart</strong>
+    <span>Demo e-commerce lab • Built for tracking practice</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
